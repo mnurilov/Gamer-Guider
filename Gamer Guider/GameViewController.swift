@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import AudioToolbox
 
 class GameViewController: UIViewController {
     @IBOutlet weak var gameNameLabel: UILabel!
@@ -36,6 +38,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var gamePlatformsLabel: UILabel!
     var platforms: [Int] = []
     
+    @IBOutlet weak var gameFavoriteButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         gameNameLabel.text = name
@@ -47,10 +51,54 @@ class GameViewController: UIViewController {
         gameTotalRatingLabel.text = String(total_rating)
         gameGenresLabel.text = "\(genres)"
         gamePlatformsLabel.text = "\(platforms)"
+        gameFavoriteButton.setTitle(String(UserDefaults.standard.bool(forKey: "\(id)")), for: .normal)
         
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func favorite_click(){
+        if UserDefaults.standard.bool(forKey: "\(id)") == false {
+            UserDefaults.standard.set(true, forKey: "\(id)")
+            gameFavoriteButton.setTitle("⭐️", for: .normal)
+        }
+        else{
+            UserDefaults.standard.removeObject(forKey: "\(id)")
+            gameFavoriteButton.setTitle(String(UserDefaults.standard.bool(forKey: "\(id)")), for: .normal)
+        }
+        
+        AudioServicesPlaySystemSound(SystemSoundID(1000))
+        
+        /*let pathToSound = Bundle.main.path(forResource: "button", ofType: "wav")!
+        let url = URL(fileURLWithPath: pathToSound)
+        
+        do{
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            
+        }*/
+        
+    }
+    
+    /*func loadSoundEffect(_ name: String) {
+        if let path = Bundle.main.path(forResource: name, ofType: nil) {
+            let fileURL = URL(fileURLWithPath: path, isDirectory: false)
+            let error = AudioServicesCreateSystemSoundID(fileURL as CFURL, &soundID)
+            
+            if error != kAudioServicesNoError {
+                print("Error code \(error) loading sound: \(path)")
+            }
+        }
+    }
+    
+    func unloadSoundEffect() {
+        AudioServicesDisposeSystemSoundID(soundID)
+        soundID = 0
+    }
+    
+    func playSoundEffect() {
+        AudioServicesPlaySystemSound(soundID)
+    }*/
 
     /*
     // MARK: - Navigation

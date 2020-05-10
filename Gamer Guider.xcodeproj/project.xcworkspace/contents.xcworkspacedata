@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Gamer Guider.xcodeproj">
+      location = "group:/Users/mnurilov/Desktop/Gamer Guider/Gamer Guider/button.wav">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
