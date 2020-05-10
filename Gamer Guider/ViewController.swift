@@ -40,6 +40,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showGame" {
+            
+            let viewToAnimate = UIView()
+
+            UIView.animate(withDuration: 3) {
+
+                viewToAnimate.alpha = 0
+
+            }
+
             if let indexPath = self.myTableView.indexPathForSelectedRow {
                 let controller = segue.destination as! GameViewController
                 if let variableName = games[indexPath.row].name {

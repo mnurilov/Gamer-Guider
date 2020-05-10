@@ -123,7 +123,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="8sO-a3-eTj" kind="show" identifier="showGame" id="MUa-l9-neC"/>
+                                            <segue destination="8sO-a3-eTj" kind="show" identifier="showGame" customClass="SlideSegue" customModule="Gamer_Guider" customModuleProvider="target" id="MUa-l9-neC"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -233,6 +233,14 @@
                                     <action selector="favorite_click" destination="8sO-a3-eTj" eventType="touchUpInside" id="nws-uI-vXH"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ySM-hU-UsL">
+                                <rect key="frame" x="37" y="70" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="go_back" destination="8sO-a3-eTj" eventType="touchUpInside" id="Aqi-kF-nFK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="qah-5B-8XU"/>
@@ -257,6 +265,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="F3x-UI-hf6"/>
+        <segue reference="MUa-l9-neC"/>
     </inferredMetricsTieBreakers>
 </document>

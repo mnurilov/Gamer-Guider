@@ -56,6 +56,10 @@ class GameViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func go_back(){
+        navigationController?.popViewController(animated: true)
+    }
+    
     @IBAction func favorite_click(){
         if UserDefaults.standard.bool(forKey: "\(id)") == false {
             UserDefaults.standard.set(true, forKey: "\(id)")
