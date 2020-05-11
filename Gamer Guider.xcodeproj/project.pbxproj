@@ -19,6 +19,7 @@
 		C8EC5FC824677A9900C97B34 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */; };
 		C8EC5FD02467A3CD00C97B34 /* button.wav in Resources */ = {isa = PBXBuildFile; fileRef = C8EC5FCF2467A3CD00C97B34 /* button.wav */; };
 		C8EC5FD22467B7C600C97B34 /* SlideSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC5FD12467B7C600C97B34 /* SlideSegue.swift */; };
+		C8F5C156246930C700B74CD1 /* VieasdwController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F5C155246930C700B74CD1 /* VieasdwController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		C8EC5FCF2467A3CD00C97B34 /* button.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button.wav; sourceTree = "<group>"; };
 		C8EC5FD12467B7C600C97B34 /* SlideSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideSegue.swift; sourceTree = "<group>"; };
+		C8F5C155246930C700B74CD1 /* VieasdwController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VieasdwController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				C85355DF24654CE300ED034E /* GameViewController.swift */,
 				C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */,
 				C8EC5FD12467B7C600C97B34 /* SlideSegue.swift */,
+				C8F5C155246930C700B74CD1 /* VieasdwController.swift */,
 			);
 			path = "Gamer Guider";
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 				C8EC5FC824677A9900C97B34 /* FavoritesViewController.swift in Sources */,
 				C86F09E82462165700B92E63 /* AppDelegate.swift in Sources */,
 				C86F0A0424625BA200B92E63 /* Game.swift in Sources */,
+				C8F5C156246930C700B74CD1 /* VieasdwController.swift in Sources */,
 				C8EC5FD22467B7C600C97B34 /* SlideSegue.swift in Sources */,
 				C85355E024654CE300ED034E /* GameViewController.swift in Sources */,
 				C86F09EA2462165700B92E63 /* SceneDelegate.swift in Sources */,
