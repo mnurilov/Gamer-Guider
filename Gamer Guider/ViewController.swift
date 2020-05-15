@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var mySearchBar: UISearchBar!
     
-    var isSearching = false
+    var currentScope = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         mySearchBar.showsScopeBar = true
         mySearchBar.scopeButtonTitles = ["All", "PC", "PS4", "Xbox One", "Switch"]
         mySearchBar.delegate = self
+        
+        api_call()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -114,7 +116,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameItem", for: indexPath)
         let nameLabel = cell.viewWithTag(100) as! UILabel
-          
+        
         let game = filtered[indexPath.row]
         nameLabel.text = game.name
         
@@ -123,29 +125,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        /*if mySearchBar.text == nil || mySearchBar.text == "" {
-            isSearching = false
-            view.endEditing(true)
-            myTableView.reloadData()
-        }
-        else{
-            isSearching = true
-        }*/
         print(searchText)
     }
     
-    /*func filtertableView(platform:Int){
-        switch platform {
-        case 0:
-            let filtered = games.filter { $0.platforms?.contains(6) == true }
-
-            
-        default:
-        }
-    }*/
-    
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         print("New scope index is now \(selectedScope)")
+        
+        currentScope = selectedScope
         
         switch selectedScope {
         case 0:
@@ -193,10 +179,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let json_encoded = dataString.data(using: .utf8)!
                 
                 do {
+                    
                     let res = try JSONDecoder().decode([Game].self, from: json_encoded)
                     self.games = res
-                    self.filtered = self.games
-                    self.myTableView.reloadData()
+                    
+                    switch self.currentScope {
+                    case 0:
+                        // ALL
+                        self.filtered = self.games
+                    case 1:
+                        // PC
+                        self.filtered = self.games.filter { $0.platforms?.contains(6) == true }
+                    case 2:
+                        // PS4
+                        self.filtered = self.games.filter { $0.platforms?.contains(48) == true }
+                    case 3:
+                        // XBOX ONE
+                        self.filtered = self.games.filter { $0.platforms?.contains(49) == true }
+                    case 4:
+                        // SWITCH
+                        self.filtered = self.games.filter { $0.platforms?.contains(130) == true }
+                    default:
+                        print("Howd you get here?")
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.myTableView.reloadData()
+                    }
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -205,76 +214,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
 
         task.resume()
-        
-        /*let session = URLSession.shared
-        let url = URL(string: "https://api-v3.igdb.com/search")!
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
-        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-
-        let body = "fields name,game; search \"\(mySearchBar.text!)\"; limit 10;".data(using: .utf8)!
-        
-        let task = session.uploadTask(with: request, from: body) { data, response, error in
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                let json_encoded = dataString.data(using: .utf8)!
-                
-                do {
-                    let res = try JSONDecoder().decode([Game].self, from: json_encoded)
-                    self.games = res
-                    self.myTableView.reloadData()
-
-                    let url2 = URL(string: "https://api-v3.igdb.com/games")!
-                    
-                    var request2 = URLRequest(url: url2)
-                    request2.httpMethod = "POST"
-                    
-                    request2.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
-                    request2.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-                    
-                    var ids = "";
-                    
-                    for g in self.games {
-                        if let game_id = g.gameId {
-                            ids += String(game_id) + ","
-                        }
-                    }
-                    
-                    ids = String(ids.dropLast())
-
-                    var body2 = "fields name,first_release_date,genres,platforms,popularity,total_rating,summary,cover; where id = (\(ids));sort popularity desc; limit \(self.games.count)".data(using: .utf8)!
-                    
-                    print("MY REQUEST LETS SEE")
-                    print(body2);
-                    
-                    let task2 = session.uploadTask(with: request2, from: body2) { data, response, error in
-                        if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                            let json_encoded = dataString.data(using: .utf8)!
-                            
-                            do {
-                                let res = try JSONDecoder().decode([Game].self, from: json_encoded)
-                                self.games = res
-                                self.myTableView.reloadData()
-                            } catch {
-                                print(error.localizedDescription)
-                            }
-                            
-                        }
-                    }
-                    
-                    task2.resume()
-                    
-                    
-                } catch {
-                    print(error.localizedDescription)
-                }
-                
-            }
-        }
-
-        task.resume()*/
     }
     
     @IBAction func api_call() {
@@ -298,7 +237,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     let res = try JSONDecoder().decode([Game].self, from: json_encoded)
                     self.games = res
                     self.filtered = self.games
-                    self.myTableView.reloadData()
+                    
+                    DispatchQueue.main.async {
+                        self.myTableView.reloadData()
+                    }
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -308,7 +250,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         task.resume()
     }
-
 
 }
 

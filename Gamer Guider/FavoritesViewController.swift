@@ -8,11 +8,9 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
+class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     @IBOutlet weak var myTableView: UITableView!
-    
-    @IBOutlet weak var mySearchBar: UISearchBar!
-    
+        
     var games = [Game]()
     
     var ids = ""
@@ -24,8 +22,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
 
         myTableView.dataSource = self
         myTableView.delegate = self
-        
-        mySearchBar.delegate = self
         
         print("Start")
         for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
@@ -58,7 +54,10 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 do {
                     let res = try JSONDecoder().decode([Game].self, from: json_encoded)
                     self.games = res
-                    self.myTableView.reloadData()
+                    
+                    DispatchQueue.main.async {
+                        self.myTableView.reloadData()
+                    }
                 } catch {
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
@@ -92,18 +91,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // End of new code block
         return cell
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        /*if mySearchBar.text == nil || mySearchBar.text == "" {
-            isSearching = false
-            view.endEditing(true)
-            myTableView.reloadData()
-        }
-        else{
-            isSearching = true
-        }*/
-        print(searchText)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -167,15 +154,5 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
