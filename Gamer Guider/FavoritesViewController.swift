@@ -39,7 +39,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         print("IDS")
         print(ids)
         let session = URLSession.shared
-        let url = URL(string: "https://api-v3.igdb.com/games")!
+        let url = URL(string: ApiManager.shared.baseURL + "games")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

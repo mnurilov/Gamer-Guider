@@ -178,7 +178,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print(mySearchBar.text!)
         
         let session = URLSession.shared
-        let url = URL(string: "https://api-v3.igdb.com/games/")!
+        let url = URL(string: ApiManager.shared.baseURL + "games")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -280,7 +280,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func api_call() {
         print("Hello")
         let session = URLSession.shared
-        let url = URL(string: "https://api-v3.igdb.com/games/")!
+        let url = URL(string: ApiManager.shared.baseURL + "games")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
