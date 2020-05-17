@@ -15,8 +15,8 @@ struct Game: Codable {
     let popularity: Double?
     let total_rating: Double?
     let summary: String?
-    let cover: Int?
-    let platforms: [Int]?
+    let cover: Cover?
+    let platforms: [Platform]?
     let genres: [Int]?
     let gameId: Int?
     let url: String?
@@ -32,6 +32,6 @@ struct Game: Codable {
         case platforms = "platforms"
         case genres = "genres"
         case gameId = "game"
-        case url = "url"
+        case url = "image_id"
     }
 }

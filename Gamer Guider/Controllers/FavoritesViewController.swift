@@ -50,7 +50,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
 
-        let body = "fields name,first_release_date,genres,platforms,popularity,total_rating,summary,cover; where id = (\(ids));sort popularity desc; limit \(count);".data(using: .utf8)!
+        let body = "fields name,first_release_date,genres,platforms.name,popularity,total_rating,summary,cover; where id = (\(ids));sort popularity desc; limit \(count);".data(using: .utf8)!
         
         print(body)
         
@@ -122,12 +122,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 else {
                     controller.first_release_date = 0
-                }
-                if let variableName = games[indexPath.row].cover {
-                    controller.cover = variableName
-                }
-                else {
-                    controller.cover = 0
                 }
                 if let variableName = games[indexPath.row].total_rating {
                     controller.total_rating = variableName

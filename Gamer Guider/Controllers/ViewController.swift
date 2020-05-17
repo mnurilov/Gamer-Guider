@@ -77,12 +77,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 else {
                     controller.first_release_date = 0
                 }
-                if let variableName = filtered[indexPath.row].cover {
-                    controller.cover = variableName
-                }
-                else {
-                    controller.cover = 0
-                }
                 if let variableName = filtered[indexPath.row].total_rating {
                     controller.total_rating = variableName
                 }
@@ -108,42 +102,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameItem", for: indexPath)
         let nameLabel = cell.viewWithTag(100) as! UILabel
-        //var coverImage = cell.viewWithTag(200) as! UIImageView
-
+        let coverImage = cell.viewWithTag(200) as! UIImageView
         
         let game = filtered[indexPath.row]
         nameLabel.text = game.name
         
-        /*let session = URLSession.shared
-        let url = URL(string: ApiManager.shared.baseURL + "covers")!
+        let image_url = URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/\(game.cover!.image_id).jpg")!
+        coverImage.downloaded(from: image_url)
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
-        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-
-        let body = "fields image_id; where game = \(game.id)".data(using: .utf8)!
-
-        let task = session.uploadTask(with: request, from: body) { data, response, error in
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                let json_encoded = dataString.data(using: .utf8)!
-                
-                do {
-                    DispatchQueue.main.async {
-                        coverImage.image = UIImage(data: dataString.data(using: .utf8)!)
-                        tableView.reloadData()
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                }
-                
-            }
-        }
-
-        task.resume()*/
-        
-        // End of new code block
         return cell
     }
     
@@ -163,19 +129,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             myTableView.reloadData()
         case 1:
             // PC
-            filtered = games.filter { $0.platforms?.contains(6) == true }
+            filtered = games.filter { $0.platforms?.contains(where: { platform in platform.id == 6 }) == true }
             myTableView.reloadData()
         case 2:
             // PS4
-            filtered = games.filter { $0.platforms?.contains(48) == true }
+            filtered = games.filter { $0.platforms?.contains(where: { platform in platform.id == 48 }) == true }
             myTableView.reloadData()
         case 3:
             // XBOX ONE
-            filtered = games.filter { $0.platforms?.contains(49) == true }
+            filtered = games.filter { $0.platforms?.contains(where: { platform in platform.id == 49 }) == true }
             myTableView.reloadData()
         case 4:
             // SWITCH
-            filtered = games.filter { $0.platforms?.contains(130) == true }
+            filtered = games.filter { $0.platforms?.contains(where: { platform in platform.id == 130 }) == true }
             myTableView.reloadData()
         default:
             print("Howd you get here?")
@@ -183,7 +149,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("SEARCH BUTTON MOTHER FUCKIGN CLICKED")
         print(mySearchBar.text!)
         
         let session = URLSession.shared
@@ -195,7 +160,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
 
-        let body = "fields name,first_release_date,genres,platforms,popularity,total_rating,summary,cover; search \"\(mySearchBar.text!)\"; limit 100;".data(using: .utf8)!
+        let body = "fields name,first_release_date,genres,platforms.name,popularity,total_rating,summary,cover.image_id; search \"\(mySearchBar.text!)\"; where cover != null; limit 100;".data(using: .utf8)!
 
         let task = session.uploadTask(with: request, from: body) { data, response, error in
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
@@ -212,16 +177,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.filtered = self.games
                     case 1:
                         // PC
-                        self.filtered = self.games.filter { $0.platforms?.contains(6) == true }
+                        self.filtered = self.games.filter { $0.platforms?.contains(where: { platform in platform.id == 6 }) == true }
                     case 2:
                         // PS4
-                        self.filtered = self.games.filter { $0.platforms?.contains(48) == true }
+                        self.filtered = self.games.filter { $0.platforms?.contains(where: { platform in platform.id == 48 }) == true }
                     case 3:
                         // XBOX ONE
-                        self.filtered = self.games.filter { $0.platforms?.contains(49) == true }
+                        self.filtered = self.games.filter { $0.platforms?.contains(where: { platform in platform.id == 49 }) == true }
                     case 4:
                         // SWITCH
-                        self.filtered = self.games.filter { $0.platforms?.contains(130) == true }
+                        self.filtered = self.games.filter { $0.platforms?.contains(where: { platform in platform.id == 130 }) == true }
                     default:
                         print("Howd you get here?")
                     }
@@ -250,7 +215,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
 
-        let body = "fields name,first_release_date,genres,platforms,popularity,total_rating,summary,cover; where rating > 0; sort rating desc; limit 100;".data(using: .utf8)!
+        let body = "fields name,first_release_date,genres,platforms.name,popularity,total_rating,summary,cover.image_id; where cover != null; where rating > 0; sort rating desc; limit 100;".data(using: .utf8)!
 
         let task = session.uploadTask(with: request, from: body) { data, response, error in
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
@@ -274,51 +239,5 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         task.resume()
     }
     
-    func fill_covers() {
-        
-        /*for game in games {
-            let session = URLSession.shared
-            let url = URL(string: ApiManager.shared.baseURL + "covers")!
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            
-            request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
-            request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-
-            let body = "fields image_id; where id = \(game.cover)".data(using: .utf8)!
-
-            let task = session.uploadTask(with: request, from: body) { data, response, error in
-                if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                    
-                    
-                    //let json = JSONSerialization.jsonObject(with: dataString.data(using: .utf8)!, options: [])
-                    
-                    //let image_url = "https://images.igdb.com/igdb/image/upload/t_cover_big/\(json[image_id]).jpg"
-                    
-                    do {
-                        let res = try JSONDecoder().decode([Game].self, from: json_encoded)
-                        self.games = res
-                        self.filtered = self.games
-                        
-                        DispatchQueue.main.async {
-                            self.myTableView.reloadData()
-                        }
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                    
-                }
-            }
-
-            task.resume()
-        }*/
-        
-    }
-    
-    @IBAction func test_animate(){
-        myButton.shake()
-    }
-
 }
 

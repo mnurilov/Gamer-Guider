@@ -18,6 +18,8 @@
 		C8E95DFE246E92C2007A3B94 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E95DFD246E92C2007A3B94 /* ApiManager.swift */; };
 		C8E95E022470BF93007A3B94 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E95E012470BF93007A3B94 /* UIButtonExtension.swift */; };
 		C8E95E042470E063007A3B94 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E95E032470E063007A3B94 /* UIImageViewExtension.swift */; };
+		C8E95E0A24718388007A3B94 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E95E0924718388007A3B94 /* Platform.swift */; };
+		C8E95E0C247191FC007A3B94 /* Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E95E0B247191FC007A3B94 /* Cover.swift */; };
 		C8EC5FC824677A9900C97B34 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */; };
 		C8EC5FD02467A3CD00C97B34 /* button.wav in Resources */ = {isa = PBXBuildFile; fileRef = C8EC5FCF2467A3CD00C97B34 /* button.wav */; };
 /* End PBXBuildFile section */
@@ -36,6 +38,8 @@
 		C8E95DFD246E92C2007A3B94 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		C8E95E012470BF93007A3B94 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		C8E95E032470E063007A3B94 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
+		C8E95E0924718388007A3B94 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		C8E95E0B247191FC007A3B94 /* Cover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cover.swift; sourceTree = "<group>"; };
 		C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		C8EC5FCF2467A3CD00C97B34 /* button.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,22 +74,40 @@
 		C86F09E62462165700B92E63 /* Gamer Guider */ = {
 			isa = PBXGroup;
 			children = (
+				C8E95E0824718094007A3B94 /* Controllers */,
+				C8E95E0724718084007A3B94 /* Codables */,
 				C8EC5FCF2467A3CD00C97B34 /* button.wav */,
 				C86F09E72462165700B92E63 /* AppDelegate.swift */,
 				C86F09E92462165700B92E63 /* SceneDelegate.swift */,
-				C86F09EB2462165700B92E63 /* ViewController.swift */,
-				C86F0A0324625BA200B92E63 /* Game.swift */,
 				C86F09ED2462165700B92E63 /* Main.storyboard */,
 				C86F09F02462165900B92E63 /* Assets.xcassets */,
 				C86F09F22462165900B92E63 /* LaunchScreen.storyboard */,
 				C86F09F52462165900B92E63 /* Info.plist */,
-				C85355DF24654CE300ED034E /* GameViewController.swift */,
-				C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */,
 				C8E95DFD246E92C2007A3B94 /* ApiManager.swift */,
 				C8E95E012470BF93007A3B94 /* UIButtonExtension.swift */,
 				C8E95E032470E063007A3B94 /* UIImageViewExtension.swift */,
 			);
 			path = "Gamer Guider";
+			sourceTree = "<group>";
+		};
+		C8E95E0724718084007A3B94 /* Codables */ = {
+			isa = PBXGroup;
+			children = (
+				C86F0A0324625BA200B92E63 /* Game.swift */,
+				C8E95E0924718388007A3B94 /* Platform.swift */,
+				C8E95E0B247191FC007A3B94 /* Cover.swift */,
+			);
+			path = Codables;
+			sourceTree = "<group>";
+		};
+		C8E95E0824718094007A3B94 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C86F09EB2462165700B92E63 /* ViewController.swift */,
+				C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */,
+				C85355DF24654CE300ED034E /* GameViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E95E0A24718388007A3B94 /* Platform.swift in Sources */,
 				C8E95DFE246E92C2007A3B94 /* ApiManager.swift in Sources */,
 				C8E95E022470BF93007A3B94 /* UIButtonExtension.swift in Sources */,
 				C86F09EC2462165700B92E63 /* ViewController.swift in Sources */,
@@ -168,6 +191,7 @@
 				C8E95E042470E063007A3B94 /* UIImageViewExtension.swift in Sources */,
 				C86F0A0424625BA200B92E63 /* Game.swift in Sources */,
 				C85355E024654CE300ED034E /* GameViewController.swift in Sources */,
+				C8E95E0C247191FC007A3B94 /* Cover.swift in Sources */,
 				C86F09EA2462165700B92E63 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
