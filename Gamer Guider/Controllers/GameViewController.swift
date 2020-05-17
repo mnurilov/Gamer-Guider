@@ -20,8 +20,6 @@ class GameViewController: UIViewController {
     
     var id: Int = 0
     
-    var cover: Int = 0
-    
     @IBOutlet weak var gameSummaryLabel: UILabel!
     var summary: String = ""
     
@@ -36,7 +34,11 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var gameFavoriteButton: UIButton!
     
+    @IBOutlet weak var coverImage: UIImageView!
+    
     weak var delegate: GameViewControllerDelegate?
+    
+    var cover: Cover!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,11 +71,9 @@ class GameViewController: UIViewController {
             UserDefaults.standard.removeObject(forKey: "\(id)")
             gameFavoriteButton.setImage(imgUnFavorite, for: .normal)
         }
-    }
-    
-    @IBAction func go_back(){
-        //delegate?.GameViewController(self, didFinishEditing: id, favorite: UserDefaults.standard.bool(forKey: "\(id)"))
-        dismiss(animated: true, completion: nil)
+        
+        let image_url = URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/\(cover.image_id).jpg")!
+        coverImage.downloaded(from: image_url)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

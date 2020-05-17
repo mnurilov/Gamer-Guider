@@ -50,7 +50,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
 
-        let body = "fields name,first_release_date,genres,platforms.name,popularity,total_rating,summary,cover; where id = (\(ids));sort popularity desc; limit \(count);".data(using: .utf8)!
+        let body = "fields name,first_release_date,genres,platforms.name,popularity,total_rating,summary,cover.image_id; where id = (\(ids)); sort rating desc; limit \(count);".data(using: .utf8)!
         
         print(body)
         
@@ -75,28 +75,27 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         task.resume()
-
-        // Do any additional setup after loading the view.
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return games.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameItem", for: indexPath)
         let nameLabel = cell.viewWithTag(100) as! UILabel
-          
+        let coverImage = cell.viewWithTag(200) as! UIImageView
+
         let game = games[indexPath.row]
         nameLabel.text = game.name
         
-        // End of new code block
+        let image_url = URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/\(game.cover!.image_id).jpg")!
+        coverImage.downloaded(from: image_url)
+        
         return cell
     }
     
@@ -140,6 +139,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 else {
                     controller.platforms = []
+                }
+                if let variableName = games[indexPath.row].cover {
+                    controller.cover = variableName
                 }
             }
         }

@@ -24,7 +24,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         myTableView.dataSource = self
         myTableView.delegate = self
@@ -37,12 +36,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return filtered.count
     }
     
@@ -95,6 +92,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 else {
                     controller.platforms = []
                 }
+                if let variableName = filtered[indexPath.row].cover {
+                    controller.cover = variableName
+                }
             }
         }
     }
@@ -111,10 +111,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         coverImage.downloaded(from: image_url)
         
         return cell
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
