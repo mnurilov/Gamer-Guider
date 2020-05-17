@@ -8,7 +8,14 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GameViewControllerDelegate {
+    func GameViewController(_ controller: GameViewController, didFinishEditing id: Int, favorite: Bool) {
+        if(favorite == false){
+            games = games.filter { $0.id != id }
+            myTableView.reloadData()
+        }
+    }
+    
     @IBOutlet weak var myTableView: UITableView!
         
     var games = [Game]()
@@ -97,6 +104,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         if segue.identifier == "showGame" {
             if let indexPath = self.myTableView.indexPathForSelectedRow {
                 let controller = segue.destination as! GameViewController
+                controller.delegate = self
                 if let variableName = games[indexPath.row].name {
                     controller.name = variableName
                 }
@@ -121,12 +129,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 else {
                     controller.cover = 0
                 }
-                if let variableName = games[indexPath.row].popularity {
-                    controller.popularity = variableName
-                }
-                else {
-                    controller.popularity = 0
-                }
                 if let variableName = games[indexPath.row].total_rating {
                     controller.total_rating = variableName
                 }
@@ -138,12 +140,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 else {
                     controller.summary = ""
-                }
-                if let variableName = games[indexPath.row].genres {
-                    controller.genres = variableName
-                }
-                else {
-                    controller.genres = []
                 }
                 if let variableName = games[indexPath.row].platforms {
                     controller.platforms = variableName

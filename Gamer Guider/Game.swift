@@ -19,6 +19,7 @@ struct Game: Codable {
     let platforms: [Int]?
     let genres: [Int]?
     let gameId: Int?
+    let url: String?
     
     private enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -31,5 +32,6 @@ struct Game: Codable {
         case platforms = "platforms"
         case genres = "genres"
         case gameId = "game"
+        case url = "url"
     }
 }

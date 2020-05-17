@@ -10,18 +10,17 @@ import UIKit
 import AVFoundation
 import AudioToolbox
 
+protocol GameViewControllerDelegate: class {
+    func GameViewController(_ controller: GameViewController, didFinishEditing id: Int, favorite: Bool)
+}
+
 class GameViewController: UIViewController {
     @IBOutlet weak var gameNameLabel: UILabel!
     var name: String = ""
     
-    @IBOutlet weak var gameIDLabel: UILabel!
     var id: Int = 0
     
-    @IBOutlet weak var gameCoverLabel: UILabel!
     var cover: Int = 0
-    
-    @IBOutlet weak var gamePopularityLabel: UILabel!
-    var popularity: Double = 0
     
     @IBOutlet weak var gameSummaryLabel: UILabel!
     var summary: String = ""
@@ -32,35 +31,49 @@ class GameViewController: UIViewController {
     @IBOutlet weak var gameTotalRatingLabel: UILabel!
     var total_rating: Double = 0
     
-    @IBOutlet weak var gameGenresLabel: UILabel!
-    var genres: [Int] = []
-    
     @IBOutlet weak var gamePlatformsLabel: UILabel!
     var platforms: [Int] = []
     
     @IBOutlet weak var gameFavoriteButton: UIButton!
     
+    weak var delegate: GameViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         gameNameLabel.text = name
-        gameIDLabel.text = String(id)
-        gameCoverLabel.text = String(cover)
-        gamePopularityLabel.text = String(popularity)
         gameSummaryLabel.text = summary
-        gameFirstReleaseDateLabel.text = String(first_release_date)
-        gameTotalRatingLabel.text = String(total_rating)
-        gameGenresLabel.text = "\(genres)"
-        gamePlatformsLabel.text = "\(platforms)"
+        gameTotalRatingLabel.text = "Rating: " + String(total_rating)
+        gamePlatformsLabel.text = "Platforms: " + "\(platforms)"
         gameFavoriteButton.setTitle(String(UserDefaults.standard.bool(forKey: "\(id)")), for: .normal)
         
-        // Do any additional setup after loading the view.
+
+        let date = Date(timeIntervalSince1970: Double(first_release_date))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
+        dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
+        dateFormatter.timeZone = .current
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+
+        let localDate = dateFormatter.string(from: date)
+        
+        gameFirstReleaseDateLabel.text = "Release Date: " + String(localDate)
+        
     }
     
     @IBAction func go_back(){
-        navigationController?.popViewController(animated: true)
+        //delegate?.GameViewController(self, didFinishEditing: id, favorite: UserDefaults.standard.bool(forKey: "\(id)"))
+        dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        delegate?.GameViewController(self, didFinishEditing: id, favorite: UserDefaults.standard.bool(forKey: "\(id)"))
+
+        super.viewDidDisappear(animated)
     }
     
     @IBAction func favorite_click(){
+        gameFavoriteButton.shake()
+        
         if UserDefaults.standard.bool(forKey: "\(id)") == false {
             UserDefaults.standard.set(true, forKey: "\(id)")
             gameFavoriteButton.setTitle("⭐️", for: .normal)
@@ -71,47 +84,6 @@ class GameViewController: UIViewController {
         }
         
         AudioServicesPlaySystemSound(SystemSoundID(1000))
-        
-        /*let pathToSound = Bundle.main.path(forResource: "button", ofType: "wav")!
-        let url = URL(fileURLWithPath: pathToSound)
-        
-        do{
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer.play()
-        } catch {
-            
-        }*/
-        
     }
     
-    /*func loadSoundEffect(_ name: String) {
-        if let path = Bundle.main.path(forResource: name, ofType: nil) {
-            let fileURL = URL(fileURLWithPath: path, isDirectory: false)
-            let error = AudioServicesCreateSystemSoundID(fileURL as CFURL, &soundID)
-            
-            if error != kAudioServicesNoError {
-                print("Error code \(error) loading sound: \(path)")
-            }
-        }
-    }
-    
-    func unloadSoundEffect() {
-        AudioServicesDisposeSystemSoundID(soundID)
-        soundID = 0
-    }
-    
-    func playSoundEffect() {
-        AudioServicesPlaySystemSound(soundID)
-    }*/
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -18,6 +18,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var currentScope = 0
     
+    @IBOutlet weak var myButton: UIButton!
+    
+    @IBOutlet weak var myFavoritesButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -79,12 +83,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 else {
                     controller.cover = 0
                 }
-                if let variableName = filtered[indexPath.row].popularity {
-                    controller.popularity = variableName
-                }
-                else {
-                    controller.popularity = 0
-                }
                 if let variableName = filtered[indexPath.row].total_rating {
                     controller.total_rating = variableName
                 }
@@ -96,12 +94,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 else {
                     controller.summary = ""
-                }
-                if let variableName = filtered[indexPath.row].genres {
-                    controller.genres = variableName
-                }
-                else {
-                    controller.genres = []
                 }
                 if let variableName = filtered[indexPath.row].platforms {
                     controller.platforms = variableName
@@ -116,9 +108,40 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameItem", for: indexPath)
         let nameLabel = cell.viewWithTag(100) as! UILabel
+        //var coverImage = cell.viewWithTag(200) as! UIImageView
+
         
         let game = filtered[indexPath.row]
         nameLabel.text = game.name
+        
+        /*let session = URLSession.shared
+        let url = URL(string: ApiManager.shared.baseURL + "covers")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
+        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+
+        let body = "fields image_id; where game = \(game.id)".data(using: .utf8)!
+
+        let task = session.uploadTask(with: request, from: body) { data, response, error in
+            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                let json_encoded = dataString.data(using: .utf8)!
+                
+                do {
+                    DispatchQueue.main.async {
+                        coverImage.image = UIImage(data: dataString.data(using: .utf8)!)
+                        tableView.reloadData()
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+            }
+        }
+
+        task.resume()*/
         
         // End of new code block
         return cell
@@ -227,7 +250,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
 
-        let body = "fields name,first_release_date,genres,platforms,popularity,total_rating,summary,cover; sort popularity desc; limit 10;".data(using: .utf8)!
+        let body = "fields name,first_release_date,genres,platforms,popularity,total_rating,summary,cover; where rating > 0; sort rating desc; limit 100;".data(using: .utf8)!
 
         let task = session.uploadTask(with: request, from: body) { data, response, error in
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
@@ -249,6 +272,52 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
 
         task.resume()
+    }
+    
+    func fill_covers() {
+        
+        /*for game in games {
+            let session = URLSession.shared
+            let url = URL(string: ApiManager.shared.baseURL + "covers")!
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            
+            request.setValue("37fb4484f0596a97d1fd1b576f2e1c80", forHTTPHeaderField: "user-key")
+            request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+
+            let body = "fields image_id; where id = \(game.cover)".data(using: .utf8)!
+
+            let task = session.uploadTask(with: request, from: body) { data, response, error in
+                if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                    
+                    
+                    //let json = JSONSerialization.jsonObject(with: dataString.data(using: .utf8)!, options: [])
+                    
+                    //let image_url = "https://images.igdb.com/igdb/image/upload/t_cover_big/\(json[image_id]).jpg"
+                    
+                    do {
+                        let res = try JSONDecoder().decode([Game].self, from: json_encoded)
+                        self.games = res
+                        self.filtered = self.games
+                        
+                        DispatchQueue.main.async {
+                            self.myTableView.reloadData()
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    
+                }
+            }
+
+            task.resume()
+        }*/
+        
+    }
+    
+    @IBAction func test_animate(){
+        myButton.shake()
     }
 
 }
