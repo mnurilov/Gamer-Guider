@@ -18,10 +18,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var currentScope = 0
     
-    @IBOutlet weak var myButton: UIButton!
-    
-    @IBOutlet weak var myFavoritesButton: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

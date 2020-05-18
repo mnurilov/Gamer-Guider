@@ -21,7 +21,6 @@
 		C8E95E0A24718388007A3B94 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E95E0924718388007A3B94 /* Platform.swift */; };
 		C8E95E0C247191FC007A3B94 /* Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E95E0B247191FC007A3B94 /* Cover.swift */; };
 		C8EC5FC824677A9900C97B34 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */; };
-		C8EC5FD02467A3CD00C97B34 /* button.wav in Resources */ = {isa = PBXBuildFile; fileRef = C8EC5FCF2467A3CD00C97B34 /* button.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +40,6 @@
 		C8E95E0924718388007A3B94 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		C8E95E0B247191FC007A3B94 /* Cover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cover.swift; sourceTree = "<group>"; };
 		C8EC5FC724677A9900C97B34 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
-		C8EC5FCF2467A3CD00C97B34 /* button.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,18 +72,16 @@
 		C86F09E62462165700B92E63 /* Gamer Guider */ = {
 			isa = PBXGroup;
 			children = (
+				C8E95E0F2471EC10007A3B94 /* Singleton */,
+				C8E95E0E2471EBA7007A3B94 /* Extensions */,
 				C8E95E0824718094007A3B94 /* Controllers */,
 				C8E95E0724718084007A3B94 /* Codables */,
-				C8EC5FCF2467A3CD00C97B34 /* button.wav */,
 				C86F09E72462165700B92E63 /* AppDelegate.swift */,
 				C86F09E92462165700B92E63 /* SceneDelegate.swift */,
 				C86F09ED2462165700B92E63 /* Main.storyboard */,
 				C86F09F02462165900B92E63 /* Assets.xcassets */,
 				C86F09F22462165900B92E63 /* LaunchScreen.storyboard */,
 				C86F09F52462165900B92E63 /* Info.plist */,
-				C8E95DFD246E92C2007A3B94 /* ApiManager.swift */,
-				C8E95E012470BF93007A3B94 /* UIButtonExtension.swift */,
-				C8E95E032470E063007A3B94 /* UIImageViewExtension.swift */,
 			);
 			path = "Gamer Guider";
 			sourceTree = "<group>";
@@ -108,6 +104,23 @@
 				C85355DF24654CE300ED034E /* GameViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C8E95E0E2471EBA7007A3B94 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C8E95E032470E063007A3B94 /* UIImageViewExtension.swift */,
+				C8E95E012470BF93007A3B94 /* UIButtonExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C8E95E0F2471EC10007A3B94 /* Singleton */ = {
+			isa = PBXGroup;
+			children = (
+				C8E95DFD246E92C2007A3B94 /* ApiManager.swift */,
+			);
+			path = Singleton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,7 +183,6 @@
 			files = (
 				C86F09F42462165900B92E63 /* LaunchScreen.storyboard in Resources */,
 				C86F09F12462165900B92E63 /* Assets.xcassets in Resources */,
-				C8EC5FD02467A3CD00C97B34 /* button.wav in Resources */,
 				C86F09EF2462165700B92E63 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

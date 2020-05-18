@@ -97,7 +97,9 @@ class GameViewController: UIViewController {
             gameFavoriteButton.setImage(imgUnFavorite, for: .normal)
         }
         
-        AudioServicesPlaySystemSound(SystemSoundID(1000))
+        AudioServicesPlaySystemSound(1104)
+        //1054 positive
+        //1053 negative
     }
     
 }
